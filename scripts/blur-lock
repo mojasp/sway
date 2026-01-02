@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PICTURE=/tmp/swaylock.png
+
+# Take a screenshot of the current Wayland session
+grim "$PICTURE"
+
+# Blur it (same trick you used)
+convert "$PICTURE" \
+  -alpha remove \
+  -resize 10% -resize 1000% -blur 0x10 \
+  "$PICTURE"
+
+# Lock using the blurred image
+swaylock -f -i "$PICTURE"
+
+rm -f "$PICTURE"
